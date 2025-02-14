@@ -24,16 +24,12 @@ public class TareaService {
     }
     // Actualiza una tarea
     public Tarea updateTarea(Long id, Tarea tarea) {
-        Optional<Tarea> existingTarea = tareaRepository.findById(id);
-        if (existingTarea.isPresent()) {
-            Tarea updatedTarea = existingTarea.get();
-            updatedTarea.setTitulo(tarea.getTitulo());
-            updatedTarea.setDescripcion(tarea.getDescripcion());
-            updatedTarea.setCompletada(tarea.isCompletada());
-            return tareaRepository.save(updatedTarea);
-        } else {
+        Optional<Tarea> tareaExistente = tareaRepository.findById(id);
+        if (!tareaExistente.isPresent()) {
             throw new RuntimeException("Tarea no encontrada con ID: " + id);
         }
+        tarea.setId(id);  // Aseguramos que la tarea a actualizar tenga el ID correcto
+        return tareaRepository.save(tarea);
     }
     // Elimina una tarea
     public void deleteTarea(Long id) {

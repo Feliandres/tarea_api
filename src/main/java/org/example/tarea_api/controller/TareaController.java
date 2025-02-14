@@ -9,31 +9,45 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+// Define la ruta base de la API
 @RequestMapping("/api/tareas")
 
 public class TareaController {
 
     @Autowired
+    // Permite inyectar la instancia del servicio
     private TareaService tareaService;
 
     @GetMapping
+    // Metodo para obtener todas las tareas
     public List<Tarea> getTareas() {
         return tareaService.getAllTareas();
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    // Metodo para crear una tarea
+    @ResponseStatus(HttpStatus.CREATED) // Indica que la respuesta debe ser un código 201
     public Tarea createTarea(@RequestBody Tarea tarea) {
+        // Verificamos que el título no sea nulo
+        if (tarea.getTitulo() == null || tarea.getTitulo().isEmpty()) {
+            throw new IllegalArgumentException("El título de la tarea es obligatorio.");
+        }
         return tareaService.createTarea(tarea);
     }
 
     @PutMapping("/{id}")
+    // Metodo para actualizar una tarea por id
     public Tarea updateTarea(@PathVariable Long id, @RequestBody Tarea tarea) {
+        // Verificamos que el título no sea nulo
+        if (tarea.getTitulo() == null || tarea.getTitulo().isEmpty()) {
+            throw new IllegalArgumentException("El título de la tarea es obligatorio.");
+        }
         return tareaService.updateTarea(id, tarea);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    // Metodo para eliminar una tarea por id
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Indica que la respuesta debe ser un código 204
     public void deleteTarea(@PathVariable Long id) {
         tareaService.deleteTarea(id);
     }

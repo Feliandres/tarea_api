@@ -13,7 +13,7 @@ public class Tarea {
     private Long id;
     private String titulo;
     private String descripcion;
-    private boolean completada;
+    private boolean completada = false;
 
     // Constructor vacío
     public Tarea() {
