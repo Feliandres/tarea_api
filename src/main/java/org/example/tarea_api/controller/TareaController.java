@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 // Define la ruta base de la API
 @RequestMapping("/api/tareas")
+@CrossOrigin(origins = "http://localhost:4200") // Permite CORS solo en este controlador
 
 public class TareaController {
 
